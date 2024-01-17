@@ -25,19 +25,25 @@ const App = () => {
   ]);
 
   const [cartItems, setCartItems] = useState([]);
+  const [totalAmount, setTotalAmount] = useState(0);
 
   const addToCart = (flower) => {
+    console.log('flower', flower);
     setCartItems([...cartItems, flower]);
+    setTotalAmount(totalAmount + flower.price);
+    console.log('flower', totalAmount);
   };
 
   const removeFromCart = (item) => {
     setCartItems(cartItems.filter((flower) => flower.id !== item.id));
+    setTotalAmount(totalAmount - item.price);
   };
 
   const checkout = async () => {
     // Remove flowers in the cart from the flowers grid
     const updatedFlowers = flowers.filter((flower) => !cartItems.some((item) => item.id === flower.id));
     setFlowers(updatedFlowers);
+    setTotalAmount(0);
   
     // Clear the cart
     setCartItems([]);
@@ -81,7 +87,8 @@ const App = () => {
       <BackgroundAni></BackgroundAni>
       <div className='flexbox'>
       <FlowerGrid flowers={flowers} addToCart={addToCart} />
-      <Cart cartItems={cartItems} removeFromCart={removeFromCart} checkout={checkout} />
+      {/* <Cart cartItems={cartItems} removeFromCart={removeFromCart} checkout={checkout} /> */}
+      <Cart cartItems={cartItems} totalAmount={totalAmount} removeFromCart={removeFromCart} checkout={checkout} />
       </div>
     </div>
   );
