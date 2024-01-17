@@ -1,0 +1,16 @@
+.cart {
+    flex: 0 0 30%;
+    /* border: 1px solid #ddd; */
+    padding: 20px;
+    text-align: center;
+  }
+  
+  .cart-item {
+    margin-bottom: 10px;
+  }
+  
+  .cart-item img {
+    max-width: 70%;
+    height: 70%;
+    border-radius: 3%;
+  }
