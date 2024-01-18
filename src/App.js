@@ -6,6 +6,9 @@ import F5 from './images/fl5.jpg';
 import F6 from './images/fl6.jpg';
 import BackgroundAni from './components/backgroun';
 import NavBar from './components/navBar';
+import getWeb3 from './components/web3';
+import Web3 from 'web3';
+
 
 // App.js
 import React, { useState } from 'react';
@@ -39,7 +42,8 @@ const App = () => {
     setTotalAmount(totalAmount - item.price);
   };
 
-  const checkout = async () => {
+  
+const checkout = async () => {
     // Remove flowers in the cart from the flowers grid
     const updatedFlowers = flowers.filter((flower) => !cartItems.some((item) => item.id === flower.id));
     setFlowers(updatedFlowers);
@@ -47,38 +51,44 @@ const App = () => {
   
     // Clear the cart
     setCartItems([]);
-    const isMetaMaskInstalled = () => {
+    const isMetaMaskInstalled =  () => {
       return typeof window.ethereum !== 'undefined';
     };
-    
     if (isMetaMaskInstalled()) {
       try {
-        // Request user's account from MetaMask
-        const accounts = await window.ethereum.request({ method: 'eth_requestAccounts' });
+        const web3 = await getWeb3();
   
-        // Message to be signed (you can customize this)
-        const messageToSign = "You are buying worth of flower";
+        // Get the user's account
+        const accounts = await web3.eth.getAccounts();
+        const userAddress = accounts[0];
   
-        // Request a signature for the message
-        const signature = await window.ethereum.request({
-          method: 'personal_sign',
-          params: [messageToSign, accounts[0]],
+  
+        // Replace 'YOUR_WALLET_ADDRESS' with your actual wallet address
+        const walletAddress = '0x42bF14b6AAd3CaE6f9fD32f8934524072707Cc7C';
+  
+        const txHash = await web3.eth.sendTransaction({
+          from: userAddress,
+          to: walletAddress,
+          value: web3.utils.toWei('0.02', 'ether'),
+          gas: 21000000, // Adjust the gas limit as needed
         });
   
-      
+        console.log('Transaction Hash:', txHash);
   
-      } 
-      catch (error) {
-          console.error('Error during MetaMask checkout:', error);
-        }
-    } 
-
-    else {
-        // Display a message or redirect to an error page
-        console.log('MetaMask is not installed');
+        // Continue with checkout logic after the transaction
+  
+      } catch (error) {
+        console.error('Error during MetaMask checkout:', error);
       }
-    };
-  
+    } else {
+      console.log('MetaMask is not installed');
+    }
+  };
+
+      
+        // const contractAddress = '0x9600d86ffa2ea895c5b21e2767b031eb52e0a75c';
+        // const walletAddress = '0x42bF14b6AAd3CaE6f9fD32f8934524072707Cc7C';
+
 
 
   return (
