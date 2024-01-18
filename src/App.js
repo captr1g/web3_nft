@@ -6,7 +6,7 @@ import F5 from './images/fl5.jpg';
 import F6 from './images/fl6.jpg';
 import BackgroundAni from './components/backgroun';
 import NavBar from './components/navBar';
-import getWeb3 from 'flower-shop/src/web3.js';
+import getWeb3 from './web3';
 
 
 
