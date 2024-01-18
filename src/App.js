@@ -7,7 +7,7 @@ import F6 from './images/fl6.jpg';
 import BackgroundAni from './components/backgroun';
 import NavBar from './components/navBar';
 import getWeb3 from './components/web3';
-import Web3 from 'web3';
+
 
 
 // App.js
